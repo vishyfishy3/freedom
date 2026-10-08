@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Freedom</title>
+  <title>Freedom Arcade</title>
 
   <style>
     * {
@@ -15,27 +15,25 @@
       margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #101020, #202b50, #111827);
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
+      background: linear-gradient(135deg, #101020, #202b50, #111827);
+      padding: 30px 18px;
     }
 
     .panel {
       width: 100%;
-      max-width: 650px;
-      padding: 40px 28px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 35px;
       background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 22px;
-      text-align: center;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
 
     h1 {
-      font-size: 2.6rem;
+      font-size: clamp(2rem, 5vw, 3.2rem);
       margin: 0 0 12px;
     }
 
@@ -46,7 +44,7 @@
 
     input {
       width: 100%;
-      max-width: 340px;
+      max-width: 350px;
       padding: 14px;
       margin: 16px 0 12px;
       border: 1px solid #64748b;
@@ -56,36 +54,40 @@
       font-size: 16px;
     }
 
-    button, .game-button {
-      display: inline-block;
-      padding: 15px 24px;
+    button {
+      padding: 14px 22px;
       border: none;
       border-radius: 10px;
       background: #7c5cff;
       color: white;
       font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
+      transition: 0.2s;
     }
 
-    button:hover, .game-button:hover {
+    button:hover {
       background: #6242e8;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #c4b5fd;
+      outline-offset: 3px;
     }
 
     .games {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-      margin-top: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
     }
 
     .game-card {
-      padding: 24px 16px;
+      padding: 28px 18px;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 16px;
     }
 
@@ -98,27 +100,73 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     #message {
-      color: #fca5a5;
       min-height: 24px;
+      color: #fca5a5;
+    }
+
+    #gameContainer {
+      margin-top: 28px;
+    }
+
+    .game-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .game-toolbar h2 {
+      margin: 0;
+    }
+
+    #gameFrame {
+      display: block;
+      width: 100%;
+      height: 70vh;
+      min-height: 400px;
+      max-height: 800px;
+      background: #080b14;
+      border: 1px solid #475569;
+      border-radius: 12px;
+    }
+
+    #gameMessage {
+      padding: 12px;
+      font-size: 14px;
     }
 
     footer {
-      margin-top: 28px;
-      font-size: 12px;
+      margin-top: 35px;
       color: #94a3b8;
+      font-size: 12px;
+    }
+
+    @media (max-width: 550px) {
+      .panel {
+        padding: 24px 16px;
+      }
+
+      #gameFrame {
+        min-height: 350px;
+      }
     }
   </style>
 </head>
 
 <body>
   <main class="panel">
+
+    <!-- PASSWORD SCREEN -->
     <section id="login">
       <h1>Freedom</h1>
-      <p>Enter the password to continue.</p>
+      <p>Enter the password to enter the arcade.</p>
 
       <form id="passwordForm">
         <input
@@ -129,63 +177,148 @@
           required
         >
         <br>
-        <button type="submit">Enter</button>
+        <button type="submit">Enter Arcade</button>
       </form>
 
-      <p id="message" role="status"></p>
+      <p id="message" role="status" aria-live="polite"></p>
     </section>
 
+    <!-- GAME SELECTION SCREEN -->
     <section id="gamePage" class="hidden">
       <h1>🎮 Freedom Arcade</h1>
-      <p>You're in. Pick a game and have fun!</p>
+      <p>Welcome. Choose a game below!</p>
 
       <div class="games">
+
         <div class="game-card">
           <h2>🔴 Slope 2</h2>
-          <p>Race down a neon track and avoid falling off.</p>
-          <a
-            class="game-button"
-            href="https://slope2.app/slope-games/slope-2/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Play Slope 2</a>
+          <p>Race down a neon track and avoid obstacles.</p>
+          <button type="button" onclick="playGame('slope')">
+            Play Slope 2
+          </button>
         </div>
 
         <div class="game-card">
           <h2>❄️ Snow Rider 3D</h2>
           <p>Sled down a snowy mountain and dodge obstacles.</p>
-          <a
-            class="game-button"
-            href="https://snowrider.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Play Snow Rider 3D</a>
+          <button type="button" onclick="playGame('snow')">
+            Play Snow Rider 3D
+          </button>
         </div>
+
       </div>
 
-      <footer>FREEDOM ARCADE • Choose your game</footer>
+      <!-- EMBEDDED GAME PLAYER -->
+      <section id="gameContainer" class="hidden">
+        <div class="game-toolbar">
+          <h2 id="gameTitle">Game</h2>
+          <button type="button" onclick="closeGame()">
+            ← Back to games
+          </button>
+        </div>
+
+        <iframe
+          id="gameFrame"
+          title="Embedded game"
+          allow="fullscreen; autoplay"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+
+        <p id="gameMessage">
+          Loading game... If it does not appear, the game host may
+          prevent embedding on other websites.
+        </p>
+      </section>
+
+      <footer>
+        FREEDOM ARCADE • HAVE FUN
+      </footer>
     </section>
+
   </main>
 
   <script>
+    // This is a casual password gate, not secure authentication.
     const correctPassword = "somethingiscominginthreedays";
 
-    const form = document.getElementById("passwordForm");
-    const passwordInput = document.getElementById("password");
-    const message = document.getElementById("message");
     const login = document.getElementById("login");
     const gamePage = document.getElementById("gamePage");
+    const passwordForm = document.getElementById("passwordForm");
+    const passwordInput = document.getElementById("password");
+    const message = document.getElementById("message");
 
-    form.addEventListener("submit", function (event) {
+    const gameContainer = document.getElementById("gameContainer");
+    const gameFrame = document.getElementById("gameFrame");
+    const gameTitle = document.getElementById("gameTitle");
+    const gameMessage = document.getElementById("gameMessage");
+
+    // Candidate URLs. A host must permit iframe embedding for its
+    // game to work here. Replace a URL if that host blocks embedding.
+    const games = {
+      slope: {
+        title: "🔴 Slope",
+        url: "https://y8.com/embed/slope"
+      },
+
+      snow: {
+        title: "❄️ Snow Rider 3D",
+        url: "https://snowrider.com/"
+      }
+    };
+
+    // Check the password.
+    passwordForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
       if (passwordInput.value === correctPassword) {
         login.classList.add("hidden");
         gamePage.classList.remove("hidden");
+        message.textContent = "";
       } else {
         message.textContent = "Incorrect password. Try again.";
         passwordInput.value = "";
         passwordInput.focus();
+      }
+    });
+
+    // Show a game inside this page.
+    function playGame(game) {
+      const selected = games[game];
+
+      if (!selected) return;
+
+      gameTitle.textContent = selected.title;
+      gameMessage.textContent =
+        "Loading game... If it does not appear, the host may block embedding.";
+
+      gameContainer.classList.remove("hidden");
+
+      // Reset the player before loading the selected game.
+      gameFrame.src = "about:blank";
+
+      requestAnimationFrame(function() {
+        gameFrame.src = selected.url;
+      });
+
+      gameContainer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    // Return to the game selection screen.
+    function closeGame() {
+      gameFrame.src = "about:blank";
+      gameContainer.classList.add("hidden");
+    }
+
+    // Show a message once the iframe document loads.
+    // Note: a load event does not guarantee the game itself works.
+    gameFrame.addEventListener("load", function() {
+      if (gameFrame.src !== "about:blank") {
+        gameMessage.textContent =
+          "If the game is blank or shows an error, try another embed-compatible game source.";
       }
     });
   </script>
