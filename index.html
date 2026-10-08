@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freedom</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #101020, #202b50, #111827);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 650px;
+      padding: 40px 28px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      margin: 0 0 12px;
+    }
+
+    p {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    input {
+      width: 100%;
+      max-width: 340px;
+      padding: 14px;
+      margin: 16px 0 12px;
+      border: 1px solid #64748b;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+    }
+
+    button, .game-button {
+      display: inline-block;
+      padding: 15px 24px;
+      border: none;
+      border-radius: 10px;
+      background: #7c5cff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    button:hover, .game-button:hover {
+      background: #6242e8;
+      transform: translateY(-3px);
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .game-card {
+      padding: 24px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+    }
+
+    .game-card h2 {
+      margin-top: 0;
+    }
+
+    .game-card p {
+      min-height: 48px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #message {
+      color: #fca5a5;
+      min-height: 24px;
+    }
+
+    footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="panel">
+    <section id="login">
+      <h1>Freedom</h1>
+      <p>Enter the password to continue.</p>
+
+      <form id="passwordForm">
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter password"
+          autocomplete="off"
+          required
+        >
+        <br>
+        <button type="submit">Enter</button>
+      </form>
+
+      <p id="message" role="status"></p>
+    </section>
+
+    <section id="gamePage" class="hidden">
+      <h1>🎮 Freedom Arcade</h1>
+      <p>You're in. Pick a game and have fun!</p>
+
+      <div class="games">
+        <div class="game-card">
+          <h2>🔴 Slope 2</h2>
+          <p>Race down a neon track and avoid falling off.</p>
+          <a
+            class="game-button"
+            href="https://slope2.app/slope-games/slope-2/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Play Slope 2</a>
+        </div>
+
+        <div class="game-card">
+          <h2>❄️ Snow Rider 3D</h2>
+          <p>Sled down a snowy mountain and dodge obstacles.</p>
+          <a
+            class="game-button"
+            href="https://snowrider.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Play Snow Rider 3D</a>
+        </div>
+      </div>
+
+      <footer>FREEDOM ARCADE • Choose your game</footer>
+    </section>
+  </main>
+
+  <script>
+    const correctPassword = "somethingiscominginthreedays";
+
+    const form = document.getElementById("passwordForm");
+    const passwordInput = document.getElementById("password");
+    const message = document.getElementById("message");
+    const login = document.getElementById("login");
+    const gamePage = document.getElementById("gamePage");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (passwordInput.value === correctPassword) {
+        login.classList.add("hidden");
+        gamePage.classList.remove("hidden");
+      } else {
+        message.textContent = "Incorrect password. Try again.";
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>
